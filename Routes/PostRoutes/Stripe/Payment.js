@@ -3,9 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const firstMagazine=require('../../../MongoDB/FirstMagSchema');
-const endpointSecret = process.env.TEST_ENDPOINTSECRET;
+const endpointSecret = process.env.ENDPOINTSECRET;
 const Stripe = require('stripe');
-const stripe = Stripe(process.env.API_TEST_KEY);
+const stripe = Stripe(process.env.API_KEY);
 
 
 
@@ -70,9 +70,11 @@ router.post('/create-checkout-session', async (req, res) => {
 
 
 
-router.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+router.post('/webhook',  express.raw({type: 'application/json'}), async (request, response) => {
   const sig = request.headers['stripe-signature'];
+ 
 
+// console.log(`i am the secind user ${usernames} & ${prices}`);
   let event;
 
   try {
@@ -85,16 +87,27 @@ router.post('/webhook', express.raw({type: 'application/json'}), (request, respo
   // Handle the event
   switch (event.type) {
     case 'checkout.session.completed':
-      const paymentIntentSucceeded = event.data.object;
-      // Then define and call a function to handle the event payment_intent.succeeded
+
+      // const checkoutSessionCompleted = event.data.object;
+      // Then define and call a function to handle the event checkout.session.completed
+     
+      
+        const newPurchase = new firstMagazine({
+          username:usernames
+        })
+        newPurchase.save()
+       
+      
+      
+
       break;
     // ... handle other event types
     default:
-      console.log(`Unhandled event type ${event.type}`);
+      // console.log(`Unhandled event type ${event.type}`);
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  response.send();
+  response.send()
 });
 
 

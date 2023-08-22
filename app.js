@@ -13,7 +13,6 @@ const populate=require('./Routes/PostRoutes/Populate');
 const Payment=require('./Routes/PostRoutes/Stripe/Payment');
 const NotFound=require('./Routes/PostRoutes/NotFound');
 const ResetPassword=require('./Routes/PostRoutes/ResetPassword');
-const User=require('./userSchema')
 
 // const Webhook=require('./Routes/PostRoutes/Stripe/Webhook');
 
@@ -49,36 +48,6 @@ app.use('/resetpassword', ResetPassword);
 app.get('/', (req, res) => {
     res.render('login');
 })
-let message;
-
-app.get('/3erryy67uhrthyreertyoujyiokl', function (req, res){
-    res.render('ResetPassword', {message: message})
-})
-app.post('/3erryy67uhrthyreertyoujyiokl', function async (req, res){
-    const {username, password} = req.body;
-    // console.log(username, password);
-
-    User.findOne({username: username}).then((resp)=>{
-        if(resp){
-        resp.setPassword(password, function() {
-            resp.save()
-        message='password successfully resetted!, please login with the new password'
-        res.redirect('/3erryy67uhrthyreertyoujyiokl')
-        })}
-        else{
-            message='this user does not exist'
-            res.redirect('/3erryy67uhrthyreertyoujyiokl')
-        
-        };
-        
-
-    })
-    
-    
-
-})
 
 
-app.listen(3000, () => {
-    console.log('server is running!!!');
-});
+app.listen();

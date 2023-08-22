@@ -3,7 +3,12 @@
 
 ### Node ###
 # Logs
+<<<<<<< HEAD
 
+=======
+*.env
+.env
+>>>>>>> parent of 6442453 (emailing and authentication)
 
 logs
 *.log
