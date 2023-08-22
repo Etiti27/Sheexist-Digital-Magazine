@@ -6,3 +6,4 @@ const firstMagSchema= new mongoose.Schema({
 
 const FirstMagModel = mongoose.model('First', firstMagSchema);
 module.exports = FirstMagModel;
+
